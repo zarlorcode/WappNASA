@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -13,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
@@ -29,13 +27,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     EditText txtDireccion;
     GoogleMap mMap;
-    ImageView botonX;
-    ImageView imagenPrincipal;
-    ImageView imagenMapa;
+    ImageView botonX, imagenPrincipal;
     RelativeLayout popup;
-    TextView nombre;
-    TextView estado;
-    TextView descripcion;
+    TextView nombre, estado, descripcion;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,16 +41,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         botonX = findViewById(R.id.botonX);
         popup = findViewById(R.id.popup);
         imagenPrincipal = findViewById(R.id.imagenPrincipal);
-        //imagenMapa = findViewById(R.id.imagenMapa);
         nombre = findViewById(R.id.nombre);
         estado = findViewById(R.id.estado);
         descripcion = findViewById(R.id.descripcion);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-       botonX.setImageDrawable(getResources().getDrawable(R.drawable.cross));
-        imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.cross));
-        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.cross));
     }
 
     @Override
@@ -77,15 +68,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng p4 = new LatLng(39.227888621023325, -0.18613961034447837);
         LatLng p5 = new LatLng(38.835774245922785, 0.27057185710177256);
         PolygonOptions zoneBalear = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(5).strokeColor(Color.argb(100, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
+
         // Dibuja el polígono en el mapa
         googleMap.addPolygon(zoneBalear);
 
         // Configura un Listener para el polígono
-
         Polygon polygon = mMap.addPolygon(zoneBalear);
         polygon.setTag("Zona 1");
 
-        // Configura un Listener para el polígono
         polygon.setClickable(true);
 
 
@@ -96,18 +86,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         p3 = new LatLng(47.7409786,-4.4735639);
         p4 = new LatLng(44.9864197,-6.3757989);
         PolygonOptions zonax = new PolygonOptions().add(p1, p2, p3, p4).strokeWidth(5).strokeColor(Color.argb(100, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
-        // Dibuja el polígono en el mapa
+
         googleMap.addPolygon(zonax);
-
-
-        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
 
         Polygon polygonFran = mMap.addPolygon(zonax);
         polygonFran.setTag("Zona 2");
-
-        // Configura un Listener para el polígono
         polygonFran.setClickable(true);
 
+        //-----------------------------------------------------------------------
         //ZONA 3
         p1 = new LatLng(31.7618455,35.5069471);
         p2 = new LatLng(31.5882584,35.4244368);
@@ -115,25 +101,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         p4 = new LatLng(31.4144056,35.5523041);
         p5 = new LatLng(31.7366645,35.5717301);
         PolygonOptions zonam = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(5).strokeColor(Color.argb(100, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
-        // Dibuja el polígono en el mapa
+
         googleMap.addPolygon(zonam);
-
-
-        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
 
         Polygon polygonMuer = mMap.addPolygon(zonam);
         polygonMuer.setTag("Zona 3");
-
-        // Configura un Listener para el polígono
         polygonMuer.setClickable(true);
 
+        //-----------------------------------------------------------------------
         //ZONA 4
-        /**45.8976976,30.829275
-         42.2413829,28.3443241
-
-
-
-         44.1754308,33.7382831**/
         p1 = new LatLng(45.8976976,30.829275);
         p2 = new LatLng(42.2413829,28.3443241);
         p3 = new LatLng(42.2438319,34.0893151);
@@ -141,18 +117,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         p5 = new LatLng(44.7853808,36.9592651);
         LatLng p6 = new LatLng(44.7853808,36.9592651);
         PolygonOptions zonan = new PolygonOptions().add(p1, p2, p3, p4,p5,p6).strokeWidth(5).strokeColor(Color.argb(100, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
-        // Dibuja el polígono en el mapa
+
         googleMap.addPolygon(zonan);
-
-
-        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
 
         Polygon polygonNegr = mMap.addPolygon(zonan);
         polygonNegr.setTag("Zona 4");
-
-        // Configura un Listener para el polígono
         polygonNegr.setClickable(true);
 
+        //-----------------------------------------------------------------------
         //ZONA 5
         p1 = new LatLng(27.1712907,34.0769491);
         p2 = new LatLng(27.8664967,35.1607181);
@@ -160,16 +132,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         p4 = new LatLng(13.3527472,43.0056311);
         p5 = new LatLng(15.8863821,40.2927481);
         PolygonOptions zonar = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(5).strokeColor(Color.argb(100, 255, 0,0 )).fillColor(Color.argb(50, 255, 0,0 ));
-        // Dibuja el polígono en el mapa
+
         googleMap.addPolygon(zonar);
-
-
-        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
 
         Polygon polygonRojo = mMap.addPolygon(zonar);
         polygonRojo.setTag("Zona 5");
-
-        // Configura un Listener para el polígono
         polygonRojo.setClickable(true);
 
         mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
@@ -181,8 +148,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Realiza acciones diferentes según la etiqueta o identificador
                 if ("Zona 1".equals(tag)) {
                     // Acciones para la Zona 1
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal2));
-                    //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
 
                     nombre.setText("Costa Valenciana");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramente contaminada"));
@@ -198,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                 } else if ("Zona 2".equals(tag)) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia2));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
                     nombre.setText("Costa Francesa");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Moderadamente contaminada"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura:</b> Verano 20-22°C, invierno 8-10°C\n" +
@@ -213,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 } else if ("Zona 3".equals(tag)) {
                     // Acciones para la Zona 3
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marmuerto2));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marmuerto));
                     nombre.setText("Mar Muerto");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Muy Contaminada"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 35ºC-40ºC en verano, supera con creces a la mayoría de cuerpos de agua. En invierno puede estar entre 17ºC y 20ºC\n" +
@@ -227,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             "<b>Contaminación por plásticos:</b> Con un impacto menor que en otros cuerpos de agua pero, también se han encontrado plásticos y deshechos en el Mar Muerto."));
 
                 } else if ("Zona 4".equals(tag)){
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marnegro2));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marnegro));
                     nombre.setText("Mar Negro\n");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Muy Contaminado\n"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 22ºC-26ºC en verano. En invierno puede estar entre 8ºC y 12ºC\n" +
@@ -239,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             "<b>Contaminación: </b> Debido a la situación del mar negro, con muchas zonas costeras cercanas a fábricas, está bastante contaminado"));
 
                 }else if ("Zona 5".equals(tag)) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marrojo2));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marrojo));
                     nombre.setText("Mar Rojo\n");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramente Contaminado\n"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 26ºC-30ºC en verano. En invierno puede estar entre 21ºC y 25ºC\n" +
@@ -264,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         MarkerOptions markerBlueshark = new MarkerOptions();
         markerBlueshark.position(blueshark);
         markerBlueshark.title("Blue Shark");
-        markerBlueshark.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon2));
+        markerBlueshark.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon));
         mMap.addMarker(markerBlueshark);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(blueshark));
 
@@ -291,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         MarkerOptions markerAngel = new MarkerOptions();
         markerAngel.position(angel);
         markerAngel.title("Angel Shark");
-        markerAngel.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon2));
+        markerAngel.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon));
         mMap.addMarker(markerAngel);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(angel));
 
@@ -310,8 +276,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Verificar qué marcador se hizo clic utilizando el título o una etiqueta personalizada
                 if (marker.getTitle().equals("Blue Shark")) {
                     // Hacer algo para el Marcador 1
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark2));
-                    //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
 
                     nombre.setText("Blue Shark");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
@@ -321,8 +286,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             "\"aletas y carne. Está clasificado como una especie vulnerable. ");
                     // Por ejemplo, mostrar una ventana emergente específica o realizar una acción específica.
                 } else if (marker.getTitle().equals("Shagreen Skate")) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.shagreenskate2));
-                    //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.shagreenskate));
 
                     nombre.setText("Shagreen Skate");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
@@ -335,7 +299,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 } else if (marker.getTitle().equals("Basking Shark")) {
                     // Hacer algo para el Marcador 3
                     imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.basking));
-                    //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
 
                     nombre.setText("Basking Shark");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
@@ -344,8 +307,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             " los humanos. Se caracteriza por nadar lentamente cerca de la superficie del agua.");
                 }else if((marker.getTitle().equals("Angel Shark"))) {
 
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.angelshark2));
-                    //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.angelshark));
 
                     nombre.setText("Angel Shark");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
@@ -356,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             " en peligro debido a la pesca excesiva y la degradación del hábitat marino.");
 
                 }else if((marker.getTitle().equals("Dusky Grouper"))) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.duskygrouper2));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.duskygrouper));
                     nombre.setText("Dusky Grouper");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
                     descripcion.setText("El Dusky Grouper es un pez grande de color gris oscuro que se encuentra en el Atlántico oriental y" +

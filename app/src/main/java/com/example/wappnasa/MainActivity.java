@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -28,6 +30,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     ImageView imagenPrincipal;
     ImageView imagenMapa;
     RelativeLayout popup;
+    TextView nombre;
+    TextView estado;
+    TextView descripcion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         popup = findViewById(R.id.popup);
         imagenPrincipal = findViewById(R.id.imagenPrincipal);
         imagenMapa = findViewById(R.id.imagenMapa);
+        nombre = findViewById(R.id.nombre);
+        estado = findViewById(R.id.estado);
+        descripcion = findViewById(R.id.descripcion);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
@@ -50,6 +58,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap= googleMap;
         this.mMap.setOnMapClickListener(this);
         this.mMap.setOnMapLongClickListener(this);
+
+        //MOVE CAMERA TO SPAIN
+        LatLng spain = new LatLng(40.33619115953262, -3.767719012949285);
+        mMap.addMarker(new MarkerOptions().position(spain).title("Spain"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(spain));
 
         //Blue Shark
         LatLng blueshark = new LatLng(35.7485293, -5.9914539);
@@ -117,12 +130,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(markerDusky);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(dusky));
 
-
-
-        //Pruebas
-        LatLng spain = new LatLng(40.33619115953262, -3.767719012949285);
-        mMap.addMarker(new MarkerOptions().position(spain).title("Spain"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(spain));
+        //-----------------------------------------------------------------------
+        //ZONA 1
 
         // Define los vértices del polígono
         LatLng p1 = new LatLng(41.26417100476725, 1.953193052956383);
@@ -131,27 +140,31 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng p4 = new LatLng(39.227888621023325, -0.18613961034447837);
         LatLng p5 = new LatLng(38.835774245922785, 0.27057185710177256);
         PolygonOptions zoneBalear = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(6).strokeColor(Color.RED).fillColor(Color.argb(50, 255, 0,0 ));
-
         // Dibuja el polígono en el mapa
         googleMap.addPolygon(zoneBalear);
 
-        LatLng balearicSea = new LatLng(40.18107881426427, 0.6552459715595473);
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(balearicSea);
-        markerOptions.title("Balearic sea");
-        markerOptions.snippet("Hola me llamo paco, me gustan las hamburguesas");
-        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.calavera));
-
-        mMap.addMarker(markerOptions);
-
         // Configura un Listener para el polígono
-
-
 
         Polygon polygon = mMap.addPolygon(zoneBalear);
 
         // Configura un Listener para el polígono
         polygon.setClickable(true);
+
+        imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+        imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+
+        nombre.setText("Mar Balear");
+        estado.setText(Html.fromHtml("<b>Estado:</b> Moderadamente contaminada"));
+        descripcion.setText(Html.fromHtml("<b>Temperatura del agua:</b> verano 24-28 grados Celsius, invierno 12-15 grados Celsius.\n" +
+                "<br>" +
+                "<b>Salinidad:</b> alrededor de 38 partes por mil (ppt), es decir relativamente alta.\n" +
+                "<br>" +
+                "<b>Niveles de oxígeno disuelto:</b> Los valores suelen estar por encima de 5-6 miligramos por litro (mg/L). Tiene niveles saludables para la vida marina.\n" +
+                "<br>" +
+                "<b>Acidez del agua (pH):</b> alcalino, con valores típicos que varían de 7.8 a 8.4.\n" +
+                "<br>" +
+                "<b>Contaminación por plásticos:</b> El Mar Balear, al igual que otros mares, enfrenta problemas de contaminación por plásticos, especialmente en áreas costeras y cerca de rutas de navegación."));
+
         mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
             public void onPolygonClick(Polygon polygon) {
@@ -160,6 +173,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Toast.makeText(getApplicationContext(), "Hiciste clic en el polígono", Toast.LENGTH_SHORT).show();
             }
         });
+        //-----------------------------------------------------------------------
+        //ZONA 2
+
+
 
 
     }

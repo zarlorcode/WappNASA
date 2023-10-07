@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -21,13 +24,25 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     EditText txtDireccion;
     GoogleMap mMap;
+    ImageView botonX;
+    ImageView imagenPrincipal;
+    ImageView imagenMapa;
+    RelativeLayout popup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         txtDireccion = findViewById(R.id.txtDireccion);
+        botonX = findViewById(R.id.botonX);
+        popup = findViewById(R.id.popup);
+        imagenPrincipal = findViewById(R.id.imagenPrincipal);
+        imagenMapa = findViewById(R.id.imagenMapa);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+       botonX.setImageDrawable(getResources().getDrawable(R.drawable.cross));
+        imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.cross));
+        imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.cross));
     }
 
     @Override
@@ -141,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onPolygonClick(Polygon polygon) {
                 // Aquí puedes mostrar tu popup o realizar cualquier acción que desees
-
+                popup.setVisibility(View.VISIBLE);
                 Toast.makeText(getApplicationContext(), "Hiciste clic en el polígono", Toast.LENGTH_SHORT).show();
             }
         });
@@ -149,6 +164,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     }
 
+
+    public void clickBotonX (View v){
+        popup.setVisibility(View.INVISIBLE);
+    }
 
 
     @Override

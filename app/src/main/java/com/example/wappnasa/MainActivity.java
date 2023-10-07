@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -15,17 +17,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
-    EditText txtLatitud, txtLongitud;
+    EditText txtDireccion;
     GoogleMap mMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txtLatitud = findViewById(R.id.txtLatitud);
-        txtLongitud = findViewById(R.id.txtLongitud);
+        txtDireccion = findViewById(R.id.txtDireccion);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
@@ -124,11 +124,27 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(balearicSea);
         markerOptions.title("Balearic sea");
-        markerOptions.snippet("Hola me llamo paco,me gustan las hamburguesas");
+        markerOptions.snippet("Hola me llamo paco, me gustan las hamburguesas");
         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.calavera));
+
         mMap.addMarker(markerOptions);
 
+        // Configura un Listener para el polígono
 
+
+
+        Polygon polygon = mMap.addPolygon(zoneBalear);
+
+        // Configura un Listener para el polígono
+        polygon.setClickable(true);
+        mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
+            @Override
+            public void onPolygonClick(Polygon polygon) {
+                // Aquí puedes mostrar tu popup o realizar cualquier acción que desees
+
+                Toast.makeText(getApplicationContext(), "Hiciste clic en el polígono", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
@@ -137,13 +153,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     @Override
     public void onMapClick(@NonNull LatLng latLng) {
-        txtLatitud.setText(""+latLng.latitude);
-        txtLongitud.setText(""+latLng.longitude);
+        //txtLatitud.setText(""+latLng.latitude);
+        //txtLongitud.setText(""+latLng.longitude);
     }
 
     @Override
     public void onMapLongClick(@NonNull LatLng latLng) {
-        txtLatitud.setText(""+latLng.latitude);
-        txtLongitud.setText(""+latLng.longitude);
+        //txtLatitud.setText(""+latLng.latitude);
+        //txtLongitud.setText(""+latLng.longitude);
     }
 }

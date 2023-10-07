@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng p3 = new LatLng(39.562252886971415, -0.18613961034447837);
         LatLng p4 = new LatLng(39.227888621023325, -0.18613961034447837);
         LatLng p5 = new LatLng(38.835774245922785, 0.27057185710177256);
-        PolygonOptions zoneBalear = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(6).strokeColor(Color.argb(100, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
+        PolygonOptions zoneBalear = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(5).strokeColor(Color.argb(100, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
         // Dibuja el polígono en el mapa
         googleMap.addPolygon(zoneBalear);
 
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         p3 = new LatLng(31.3405186,35.4314751);
         p4 = new LatLng(31.4144056,35.5523041);
         p5 = new LatLng(31.7366645,35.5717301);
-        PolygonOptions zonam = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(6).strokeColor(Color.GREEN).fillColor(Color.argb(50, 0, 255,0 ));
+        PolygonOptions zonam = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(5).strokeColor(Color.argb(100, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
         // Dibuja el polígono en el mapa
         googleMap.addPolygon(zonam);
 
@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         p4 = new LatLng(41.473398,39.3170011);
         p5 = new LatLng(44.7853808,36.9592651);
         LatLng p6 = new LatLng(44.7853808,36.9592651);
-        PolygonOptions zonan = new PolygonOptions().add(p1, p2, p3, p4,p5,p6).strokeWidth(6).strokeColor(Color.GREEN).fillColor(Color.argb(50, 0, 255,0 ));
+        PolygonOptions zonan = new PolygonOptions().add(p1, p2, p3, p4,p5,p6).strokeWidth(5).strokeColor(Color.argb(100, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
         // Dibuja el polígono en el mapa
         googleMap.addPolygon(zonan);
 
@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         p3 = new LatLng(17.7282221,41.7809541);
         p4 = new LatLng(13.3527472,43.0056311);
         p5 = new LatLng(15.8863821,40.2927481);
-        PolygonOptions zonar = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(6).strokeColor(Color.RED).fillColor(Color.argb(50, 255, 0,0 ));
+        PolygonOptions zonar = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(5).strokeColor(Color.argb(100, 255, 0,0 )).fillColor(Color.argb(50, 255, 0,0 ));
         // Dibuja el polígono en el mapa
         googleMap.addPolygon(zonar);
 
@@ -213,7 +213,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 } else if ("Zona 3".equals(tag)) {
                     // Acciones para la Zona 3
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marmuerto));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marmuerto2));
                     nombre.setText("Mar Muerto");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Muy Contaminada"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 35ºC-40ºC en verano, supera con creces a la mayoría de cuerpos de agua. En invierno puede estar entre 17ºC y 20ºC\n" +
@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             "<b>Contaminación por plásticos:</b> Con un impacto menor que en otros cuerpos de agua pero, también se han encontrado plásticos y deshechos en el Mar Muerto."));
 
                 } else if ("Zona 4".equals(tag)){
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marnegro));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marnegro2));
                     nombre.setText("Mar Negro\n");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Muy Contaminado\n"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 22ºC-26ºC en verano. En invierno puede estar entre 8ºC y 12ºC\n" +
@@ -239,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             "<b>Contaminación: </b> Debido a la situación del mar negro, con muchas zonas costeras cercanas a fábricas, está bastante contaminado"));
 
                 }else if ("Zona 5".equals(tag)) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marrojo));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marrojo2));
                     nombre.setText("Mar Rojo\n");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramente Contaminado\n"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 26ºC-30ºC en verano. En invierno puede estar entre 21ºC y 25ºC\n" +

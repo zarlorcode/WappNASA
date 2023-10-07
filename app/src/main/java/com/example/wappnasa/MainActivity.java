@@ -2,6 +2,7 @@ package com.example.wappnasa;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -38,7 +39,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
+
         txtDireccion = findViewById(R.id.txtDireccion);
         botonX = findViewById(R.id.botonX);
         popup = findViewById(R.id.popup);
@@ -62,9 +65,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.mMap.setOnMapLongClickListener(this);
 
         //MOVE CAMERA TO SPAIN
-        LatLng spain = new LatLng(40.33619115953262, -3.767719012949285);
-        mMap.addMarker(new MarkerOptions().position(spain).title("Spain"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(spain));
 
 
         //-----------------------------------------------------------------------
@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         LatLng p3 = new LatLng(39.562252886971415, -0.18613961034447837);
         LatLng p4 = new LatLng(39.227888621023325, -0.18613961034447837);
         LatLng p5 = new LatLng(38.835774245922785, 0.27057185710177256);
-        PolygonOptions zoneBalear = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(6).strokeColor(Color.RED).fillColor(Color.argb(50, 255, 0,0 ));
+        PolygonOptions zoneBalear = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(6).strokeColor(Color.argb(100, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
         // Dibuja el polígono en el mapa
         googleMap.addPolygon(zoneBalear);
 
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         p2 = new LatLng(46.1548007,-1.5081489);
         p3 = new LatLng(47.7409786,-4.4735639);
         p4 = new LatLng(44.9864197,-6.3757989);
-        PolygonOptions zonax = new PolygonOptions().add(p1, p2, p3, p4).strokeWidth(6).strokeColor(Color.RED).fillColor(Color.argb(50, 255, 0,0 ));
+        PolygonOptions zonax = new PolygonOptions().add(p1, p2, p3, p4).strokeWidth(5).strokeColor(Color.argb(100, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
         // Dibuja el polígono en el mapa
         googleMap.addPolygon(zonax);
 
@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Realiza acciones diferentes según la etiqueta o identificador
                 if ("Zona 1".equals(tag)) {
                     // Acciones para la Zona 1
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal2));
                     //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
 
                     nombre.setText("Costa Valenciana");
@@ -198,9 +198,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
                 } else if ("Zona 2".equals(tag)) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia2));
                     nombre.setText("Costa Francesa");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramente contaminada"));
+                    estado.setText(Html.fromHtml("<b>Estado:</b> Moderadamente contaminada"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura:</b> Verano 20-22°C, invierno 8-10°C\n" +
                             "<br>" +
                             "<b>Salinidad:</b> alrededor de 30-35 partes por mil (ppt), valores moderadamente altos.\n" +
@@ -257,14 +257,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
-        //ANIMALES EN PELIGRO Ç
+        //ANIMALES EN PELIGRO
 
         //Blue Shark Marker
         LatLng blueshark = new LatLng(36.034271, -6.169991);
         MarkerOptions markerBlueshark = new MarkerOptions();
         markerBlueshark.position(blueshark);
         markerBlueshark.title("Blue Shark");
-        markerBlueshark.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconopeligro2));
+        markerBlueshark.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon2));
         mMap.addMarker(markerBlueshark);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(blueshark));
 
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         MarkerOptions markerAngel = new MarkerOptions();
         markerAngel.position(angel);
         markerAngel.title("Angel Shark");
-        markerAngel.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconopeligro2));
+        markerAngel.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon2));
         mMap.addMarker(markerAngel);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(angel));
 
@@ -310,18 +310,18 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 // Verificar qué marcador se hizo clic utilizando el título o una etiqueta personalizada
                 if (marker.getTitle().equals("Blue Shark")) {
                     // Hacer algo para el Marcador 1
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark2));
                     //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
 
                     nombre.setText("Blue Shark");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
-                    descripcion.setText("El tiburón azul es un tiburón de color azul brillante que habita en océanos de todo el mundo. \" +\n" +
-                            "\"Es conocido por ser rápido y ágil, se alimenta de peces y calamares, y desempeña un papel importante en \" +\n" +
-                            "\"los ecosistemas marinos. Sin embargo, enfrenta amenazas debido a la pesca excesiva y la demanda de sus \" +\n" +
+                    descripcion.setText("El tiburón azul es un tiburón de color azul brillante que habita en océanos de todo el mundo."+
+                            "\"Es conocido por ser rápido y ágil, se alimenta de peces y calamares, y desempeña un papel importante en " +
+                            "\"los ecosistemas marinos. Sin embargo, enfrenta amenazas debido a la pesca excesiva y la demanda de sus"+
                             "\"aletas y carne. Está clasificado como una especie vulnerable. ");
                     // Por ejemplo, mostrar una ventana emergente específica o realizar una acción específica.
                 } else if (marker.getTitle().equals("Shagreen Skate")) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.shagreenskate2));
                     //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
 
                     nombre.setText("Shagreen Skate");
@@ -334,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     // Hacer algo para el Marcador 2
                 } else if (marker.getTitle().equals("Basking Shark")) {
                     // Hacer algo para el Marcador 3
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.basking));
                     //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
 
                     nombre.setText("Basking Shark");
@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             " los humanos. Se caracteriza por nadar lentamente cerca de la superficie del agua.");
                 }else if((marker.getTitle().equals("Angel Shark"))) {
 
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.angelshark2));
                     //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
 
                     nombre.setText("Angel Shark");
@@ -356,6 +356,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             " en peligro debido a la pesca excesiva y la degradación del hábitat marino.");
 
                 }else if((marker.getTitle().equals("Dusky Grouper"))) {
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.duskygrouper2));
                     nombre.setText("Dusky Grouper");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
                     descripcion.setText("El Dusky Grouper es un pez grande de color gris oscuro que se encuentra en el Atlántico oriental y" +

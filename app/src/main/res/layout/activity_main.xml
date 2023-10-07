@@ -43,45 +43,35 @@
 
     <RelativeLayout
         android:id="@+id/popup"
-        android:layout_width="310dp"
-        android:layout_height="611dp"
+        android:layout_width="409dp"
+        android:layout_height="682dp"
         android:layout_marginStart="159dp"
         android:layout_marginTop="250dp"
         android:layout_marginEnd="159dp"
         android:layout_marginBottom="200dp"
-        android:background="#D8FFFFFF"
         map:layout_constraintBottom_toBottomOf="parent"
         map:layout_constraintEnd_toEndOf="parent"
         map:layout_constraintStart_toStartOf="parent"
         map:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="319dp"
+            android:layout_height="533dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="38dp"
+            android:layout_marginBottom="111dp"
+            android:background="#D8FFFFFF"
             android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="325dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="250dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/botonX"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:contentDescription="kehdcljedef"
-                    android:onClick="clickBotonX"
-                    android:src="@drawable/cross"
-                    android:textAlignment="gravity"
-                    map:srcCompat="@drawable/cross"
-                    tools:ignore="TouchTargetSizeCheck" />
-            </LinearLayout>
 
             <ImageView
                 android:id="@+id/imagenPrincipal"
                 android:layout_width="match_parent"
-                android:layout_height="93dp"
+                android:layout_height="186dp"
                 android:src="@drawable/cross"
                 map:srcCompat="@drawable/cross" />
 
@@ -110,6 +100,25 @@
                 android:text="TextView" />
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/botonX"
+            android:layout_width="49dp"
+            android:layout_height="99dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="314dp"
+            android:layout_marginTop="17dp"
+            android:layout_marginEnd="46dp"
+            android:layout_marginBottom="566dp"
+            android:contentDescription="kehdcljedef"
+            android:onClick="clickBotonX"
+            android:src="@drawable/cross"
+            android:textAlignment="gravity"
+            map:srcCompat="@drawable/cross"
+            tools:ignore="TouchTargetSizeCheck" />
 
     </RelativeLayout>
 

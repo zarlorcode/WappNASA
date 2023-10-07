@@ -107,6 +107,71 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         // Configura un Listener para el polígono
         polygonFran.setClickable(true);
+
+        //ZONA 3
+        p1 = new LatLng(31.7618455,35.5069471);
+        p2 = new LatLng(31.5882584,35.4244368);
+        p3 = new LatLng(31.3405186,35.4314751);
+        p4 = new LatLng(31.4144056,35.5523041);
+        p5 = new LatLng(31.7366645,35.5717301);
+        PolygonOptions zonam = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(6).strokeColor(Color.GREEN).fillColor(Color.argb(50, 0, 255,0 ));
+        // Dibuja el polígono en el mapa
+        googleMap.addPolygon(zonam);
+
+
+        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
+
+        Polygon polygonMuer = mMap.addPolygon(zonam);
+        polygonMuer.setTag("Zona 3");
+
+        // Configura un Listener para el polígono
+        polygonMuer.setClickable(true);
+
+        //ZONA 4
+        /**45.8976976,30.829275
+         42.2413829,28.3443241
+
+
+
+         44.1754308,33.7382831**/
+        p1 = new LatLng(45.8976976,30.829275);
+        p2 = new LatLng(42.2413829,28.3443241);
+        p3 = new LatLng(42.2438319,34.0893151);
+        p4 = new LatLng(41.473398,39.3170011);
+        p5 = new LatLng(44.7853808,36.9592651);
+        LatLng p6 = new LatLng(44.7853808,36.9592651);
+        PolygonOptions zonan = new PolygonOptions().add(p1, p2, p3, p4,p5,p6).strokeWidth(6).strokeColor(Color.GREEN).fillColor(Color.argb(50, 0, 255,0 ));
+        // Dibuja el polígono en el mapa
+        googleMap.addPolygon(zonan);
+
+
+        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
+
+        Polygon polygonNegr = mMap.addPolygon(zonan);
+        polygonNegr.setTag("Zona 4");
+
+        // Configura un Listener para el polígono
+        polygonNegr.setClickable(true);
+
+        //ZONA 5
+        p1 = new LatLng(27.1712907,34.0769491);
+        p2 = new LatLng(27.8664967,35.1607181);
+        p3 = new LatLng(17.7282221,41.7809541);
+        p4 = new LatLng(13.3527472,43.0056311);
+        p5 = new LatLng(15.8863821,40.2927481);
+        PolygonOptions zonar = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(6).strokeColor(Color.RED).fillColor(Color.argb(50, 255, 0,0 ));
+        // Dibuja el polígono en el mapa
+        googleMap.addPolygon(zonar);
+
+
+        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
+
+        Polygon polygonRojo = mMap.addPolygon(zonar);
+        polygonRojo.setTag("Zona 5");
+
+        // Configura un Listener para el polígono
+        polygonRojo.setClickable(true);
+
         mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
             public void onPolygonClick(Polygon polygon) {
@@ -135,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 } else if ("Zona 2".equals(tag)) {
                     imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
                     nombre.setText("Costa Francesa");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramentee contaminada"));
+                    estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramente contaminada"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura:</b> Verano 20-22°C, invierno 8-10°C\n" +
                             "<br>" +
                             "<b>Salinidad:</b> alrededor de 30-35 partes por mil (ppt), valores moderadamente altos.\n" +
@@ -148,8 +213,46 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                 } else if ("Zona 3".equals(tag)) {
                     // Acciones para la Zona 3
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marmuerto));
+                    nombre.setText("Mar Muerto");
+                    estado.setText(Html.fromHtml("<b>Estado:</b> Muy Contaminada"));
+                    descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 35ºC-40ºC en verano, supera con creces a la mayoría de cuerpos de agua. En invierno puede estar entre 17ºC y 20ºC\n" +
+                            "<br>" +
+                            "<b>Salinidad:</b> alrededor de 330-350 partes por mil (ppt), valores exageradamente altos.\n" +
+                            "<br>" +
+                            "<b>Niveles de oxígeno disuelto:</b> Debido a la alta cantidad de sal y, por ello a la ausencia de vida marina típica, los niveles de oxigeno en el mar muerto son extremadamente bajos\n" +
+                            "<br>" +
+                            "<b>Acidez del agua (pH):</b> El pH del Mar Muerto es típicamente muy bajo, lo que significa que es altamente ácido. Los valores de pH en el Mar Muerto pueden caer en un rango de alrededor de 6.3 a 6.7.\n" +
+                            "<br>" +
+                            "<b>Contaminación por plásticos:</b> Con un impacto menor que en otros cuerpos de agua pero, también se han encontrado plásticos y deshechos en el Mar Muerto."));
+
+                } else if ("Zona 4".equals(tag)){
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marnegro));
+                    nombre.setText("Mar Negro\n");
+                    estado.setText(Html.fromHtml("<b>Estado:</b> Muy Contaminado\n"));
+                    descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 22ºC-26ºC en verano. En invierno puede estar entre 8ºC y 12ºC\n" +
+                            "<br>" +
+                            "<b>Salinidad:</b> alrededor de 17-18 partes por mil (ppt), valores bastante bajos comparados con otros mares y oceanos.\n" +
+                            "<br>" +
+                            "<b>Niveles de oxígeno disuelto:</b> En general tiene niveles normales de oxigeno disuelto. Saludables para la vida marina\n" +
+                            "<br>" +
+                            "<b>Contaminación: </b> Debido a la situación del mar negro, con muchas zonas costeras cercanas a fábricas, está bastante contaminado"));
+
+                }else if ("Zona 5".equals(tag)) {
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marrojo));
+                    nombre.setText("Mar Rojo\n");
+                    estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramente Contaminado\n"));
+                    descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 26ºC-30ºC en verano. En invierno puede estar entre 21ºC y 25ºC\n" +
+                            "<br>" +
+                            "<b>Salinidad:</b> La salinidad del Mar Rojo puede oscilar entre 36 y 41 partes por mil (ppt). Son valores bastante altos\n" +
+                            "<br>" +
+                            "<b>Niveles de oxígeno disuelto:</b> En general tiene niveles normales de oxigeno disuelto. Saludables para la vida marina\n" +
+                            "<br>" +
+                            "<b>Peligrosidad: El mar rojo tiene bastantes especies peligrosas, como tiburones, peces león, peces escorpión y muchos más"));
+
                 }
-                popup.setVisibility(View.VISIBLE);
+                    popup.setVisibility(View.VISIBLE);
+
             }
         });
 

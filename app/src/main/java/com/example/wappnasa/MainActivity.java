@@ -3,6 +3,7 @@ package com.example.wappnasa;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -41,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         botonX = findViewById(R.id.botonX);
         popup = findViewById(R.id.popup);
         imagenPrincipal = findViewById(R.id.imagenPrincipal);
-        imagenMapa = findViewById(R.id.imagenMapa);
+        //imagenMapa = findViewById(R.id.imagenMapa);
         nombre = findViewById(R.id.nombre);
         estado = findViewById(R.id.estado);
         descripcion = findViewById(R.id.descripcion);
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
        botonX.setImageDrawable(getResources().getDrawable(R.drawable.cross));
         imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.cross));
-        imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.cross));
+        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.cross));
     }
 
     @Override
@@ -64,18 +66,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions().position(spain).title("Spain"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(spain));
 
-        //Blue Shark
-        LatLng blueshark = new LatLng(35.7485293, -5.9914539);
-        MarkerOptions markerBlueshark = new MarkerOptions();
-        markerBlueshark.position(blueshark);
-        markerBlueshark.title("Blue Shark");
-        markerBlueshark.snippet("El tiburón azul es un tiburón de color azul brillante que habita en océanos de todo el mundo. " +
-                "Es conocido por ser rápido y ágil, se alimenta de peces y calamares, y desempeña un papel importante en " +
-                "los ecosistemas marinos. Sin embargo, enfrenta amenazas debido a la pesca excesiva y la demanda de sus " +
-                "aletas y carne. Está clasificado como una especie vulnerable. ");
-        markerBlueshark.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconopeligro2));
-        mMap.addMarker(markerBlueshark);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(blueshark));
+
 
         //Shagreen Skate
         LatLng shangreen = new LatLng(57.2567039, 0.6946521);
@@ -114,8 +105,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 " atrapar presas que pasan cerca. Aunque solían ser comunes, muchas especies de angelshark se consideran" +
                 " en peligro debido a la pesca excesiva y la degradación del hábitat marino.");
         markerAngel.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconopeligro2));
-        mMap.addMarker(markerAngel);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(angel));
+        //mMap.addMarker(markerAngel);
+       // mMap.moveCamera(CameraUpdateFactory.newLatLng(angel));
 
         //Dusky Grouper
         LatLng dusky = new LatLng(39.4356891, 0.6393341);
@@ -146,38 +137,84 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Configura un Listener para el polígono
 
         Polygon polygon = mMap.addPolygon(zoneBalear);
+        polygon.setTag("Zona 1");
 
         // Configura un Listener para el polígono
         polygon.setClickable(true);
 
-        imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
-        imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
 
-        nombre.setText("Mar Balear");
-        estado.setText(Html.fromHtml("<b>Estado:</b> Moderadamente contaminada"));
-        descripcion.setText(Html.fromHtml("<b>Temperatura del agua:</b> verano 24-28 grados Celsius, invierno 12-15 grados Celsius.\n" +
-                "<br>" +
-                "<b>Salinidad:</b> alrededor de 38 partes por mil (ppt), es decir relativamente alta.\n" +
-                "<br>" +
-                "<b>Niveles de oxígeno disuelto:</b> Los valores suelen estar por encima de 5-6 miligramos por litro (mg/L). Tiene niveles saludables para la vida marina.\n" +
-                "<br>" +
-                "<b>Acidez del agua (pH):</b> alcalino, con valores típicos que varían de 7.8 a 8.4.\n" +
-                "<br>" +
-                "<b>Contaminación por plásticos:</b> El Mar Balear, al igual que otros mares, enfrenta problemas de contaminación por plásticos, especialmente en áreas costeras y cerca de rutas de navegación."));
+        //-----------------------------------------------------------------------
 
         mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
             public void onPolygonClick(Polygon polygon) {
-                // Aquí puedes mostrar tu popup o realizar cualquier acción que desees
+                // Obtén la etiqueta o identificador del polígono clicado
+                String tag = (String) polygon.getTag();
+
+                // Realiza acciones diferentes según la etiqueta o identificador
+                if ("Zona 1".equals(tag)) {
+                    // Acciones para la Zona 1
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+                    //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+
+                    nombre.setText("Mar Balear");
+                    estado.setText(Html.fromHtml("<b>Estado:</b> Moderadamente contaminada"));
+                    descripcion.setText(Html.fromHtml("<b>Temperatura del agua:</b> verano 24-28 grados Celsius, invierno 12-15 grados Celsius.\n" +
+                            "<br>" +
+                            "<b>Salinidad:</b> alrededor de 38 partes por mil (ppt), es decir relativamente alta.\n" +
+                            "<br>" +
+                            "<b>Niveles de oxígeno disuelto:</b> Los valores suelen estar por encima de 5-6 miligramos por litro (mg/L). Tiene niveles saludables para la vida marina.\n" +
+                            "<br>" +
+                            "<b>Acidez del agua (pH):</b> alcalino, con valores típicos que varían de 7.8 a 8.4.\n" +
+                            "<br>" +
+                            "<b>Contaminación por plásticos:</b> El Mar Balear, al igual que otros mares, enfrenta problemas de contaminación por plásticos, especialmente en áreas costeras y cerca de rutas de navegación."));
+
+
+                } else if ("Zona 2".equals(tag)) {
+
+                } else if ("Zona 3".equals(tag)) {
+                    // Acciones para la Zona 3
+                }
                 popup.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(), "Hiciste clic en el polígono", Toast.LENGTH_SHORT).show();
             }
         });
-        //-----------------------------------------------------------------------
-        //ZONA 2
 
 
 
+        //Blue Shark Marker
+        LatLng blueshark = new LatLng(36.034271, -6.169991);
+        MarkerOptions markerBlueshark = new MarkerOptions();
+        markerBlueshark.position(blueshark);
+        markerBlueshark.title("Blue Shark");
+        markerBlueshark.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconopeligro2));
+        mMap.addMarker(markerBlueshark);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(blueshark));
+
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                // Verificar qué marcador se hizo clic utilizando el título o una etiqueta personalizada
+                if (marker.getTitle().equals("Blue Shark")) {
+                    // Hacer algo para el Marcador 1
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
+                    //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
+
+                    nombre.setText("Blue Shark");
+                    estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
+                    descripcion.setText("El tiburón azul es un tiburón de color azul brillante que habita en océanos de todo el mundo. \" +\n" +
+                            "\"Es conocido por ser rápido y ágil, se alimenta de peces y calamares, y desempeña un papel importante en \" +\n" +
+                            "\"los ecosistemas marinos. Sin embargo, enfrenta amenazas debido a la pesca excesiva y la demanda de sus \" +\n" +
+                            "\"aletas y carne. Está clasificado como una especie vulnerable. ");
+                    // Por ejemplo, mostrar una ventana emergente específica o realizar una acción específica.
+                } else if (marker.getTitle().equals("Marcador 2")) {
+                    // Hacer algo para el Marcador 2
+                } else if (marker.getTitle().equals("Marcador 3")) {
+                    // Hacer algo para el Marcador 3
+                }
+                popup.setVisibility(View.VISIBLE);
+                return false; // Devuelve 'true' si consumes el evento, 'false' si no.
+            }
+        });
 
     }
 

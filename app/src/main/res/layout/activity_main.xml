@@ -85,13 +85,6 @@
                 android:src="@drawable/cross"
                 map:srcCompat="@drawable/cross" />
 
-            <ImageView
-                android:id="@+id/imagenMapa"
-                android:layout_width="match_parent"
-                android:layout_height="93dp"
-                android:src="@drawable/cross"
-                map:srcCompat="@drawable/cross" />
-
             <TextView
                 android:id="@+id/nombre"
                 android:layout_width="match_parent"

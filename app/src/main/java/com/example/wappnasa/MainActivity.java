@@ -90,7 +90,23 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
         //-----------------------------------------------------------------------
+        //ZONA 2
+        p1 = new LatLng(43.5421999,-1.5401939);
+        p2 = new LatLng(46.1548007,-1.5081489);
+        p3 = new LatLng(47.7409786,-4.4735639);
+        p4 = new LatLng(44.9864197,-6.3757989);
+        PolygonOptions zonax = new PolygonOptions().add(p1, p2, p3, p4).strokeWidth(6).strokeColor(Color.RED).fillColor(Color.argb(50, 255, 0,0 ));
+        // Dibuja el polígono en el mapa
+        googleMap.addPolygon(zonax);
 
+
+        //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
+
+        Polygon polygonFran = mMap.addPolygon(zonax);
+        polygonFran.setTag("Zona 2");
+
+        // Configura un Listener para el polígono
+        polygonFran.setClickable(true);
         mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
             public void onPolygonClick(Polygon polygon) {
@@ -103,8 +119,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
                     //imagenMapa.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
 
-                    nombre.setText("Mar Balear");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Moderadamente contaminada"));
+                    nombre.setText("Costa Valenciana");
+                    estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramente contaminada"));
                     descripcion.setText(Html.fromHtml("<b>Temperatura del agua:</b> verano 24-28 grados Celsius, invierno 12-15 grados Celsius.\n" +
                             "<br>" +
                             "<b>Salinidad:</b> alrededor de 38 partes por mil (ppt), es decir relativamente alta.\n" +
@@ -113,10 +129,22 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             "<br>" +
                             "<b>Acidez del agua (pH):</b> alcalino, con valores típicos que varían de 7.8 a 8.4.\n" +
                             "<br>" +
-                            "<b>Contaminación por plásticos:</b> El Mar Balear, al igual que otros mares, enfrenta problemas de contaminación por plásticos, especialmente en áreas costeras y cerca de rutas de navegación."));
+                            "<b>Contaminación por plásticos:</b> La costa Valenciana, al igual que otros mares, enfrenta problemas de contaminación por plásticos, especialmente en áreas costeras y cerca de rutas de navegación."));
 
 
                 } else if ("Zona 2".equals(tag)) {
+                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
+                    nombre.setText("Costa Francesa");
+                    estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramentee contaminada"));
+                    descripcion.setText(Html.fromHtml("<b>Temperatura:</b> Verano 20-22°C, invierno 8-10°C\n" +
+                            "<br>" +
+                            "<b>Salinidad:</b> alrededor de 30-35 partes por mil (ppt), valores moderadamente altos.\n" +
+                            "<br>" +
+                            "<b>Niveles de oxígeno disuelto:</b> Los valores suelen estar por encima de 5-6 miligramos por litro (mg/L). Tiene niveles saludables para la vida marina.\n" +
+                            "<br>" +
+                            "<b>Acidez del agua (pH):</b> alcalino, con valores típicos que varían de 7.8 a 8.4.\n" +
+                            "<br>" +
+                            "<b>Contaminación por plásticos:</b> Como en muchas partes del mundo, la contaminación por plásticos es un problema en algunas áreas costeras de Francia, especialmente cerca de rutas de navegación y áreas urbanas."));
 
                 } else if ("Zona 3".equals(tag)) {
                     // Acciones para la Zona 3
@@ -236,6 +264,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 return false; // Devuelve 'true' si consumes el evento, 'false' si no.
             }
         });
+        //-----------------------------------------------------------------------
+
+
 
     }
 

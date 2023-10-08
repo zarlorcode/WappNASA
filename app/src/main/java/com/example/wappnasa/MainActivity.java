@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.EventLogTags;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -124,7 +125,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                         nombre.setText(zona.nombre);
                         estado.setText(Html.fromHtml("<b>Estado: </b>") + zona.estado);
-                        descripcion.setText(zona.descripcion);
+                        descripcion.setText(Html.fromHtml(zona.descripcion));
+                        //descripcion.setText(zona.descripcion);
                     });
 
                 });

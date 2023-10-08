@@ -4,9 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,10 +27,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import Persistencia.AnimalRepository;
+import Persistencia.PuntoRepository;
 import Persistencia.SingletonConnection;
+import Persistencia.ZonaRepository;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     EditText txtDireccion;
@@ -62,94 +68,65 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.mMap.setOnMapClickListener(this);
         this.mMap.setOnMapLongClickListener(this);
 
-        //-----------------------------------------------------------------------
-        //ZONA 1
 
-        // Define los vértices del polígono
-        LatLng p1 = new LatLng(41.26417100476725, 1.953193052956383);
-        LatLng p2 = new LatLng(41.02885965406742, 0.9676577810986803);
-        LatLng p3 = new LatLng(39.562252886971415, -0.18613961034447837);
-        LatLng p4 = new LatLng(39.227888621023325, -0.18613961034447837);
-        LatLng p5 = new LatLng(38.835774245922785, 0.27057185710177256);
-        PolygonOptions zoneBalear = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(5).strokeColor(Color.argb(100, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
+        Thread hiloZona = new Thread(() -> {
+            List<Zona> zonas = new ZonaRepository(SingletonConnection.getSingletonInstance()).obtenerTodos();
 
-        // Dibuja el polígono en el mapa
-        googleMap.addPolygon(zoneBalear);
+            for(Zona zonaActual : zonas)
+            {
+                Thread hiloPunto = new Thread(() -> {
 
-        // Configura un Listener para el polígono
-        Polygon polygon = mMap.addPolygon(zoneBalear);
-        polygon.setTag("Zona 1");
+                    List<Punto> puntosZona1 = new PuntoRepository(SingletonConnection.getSingletonInstance()).obtenerPuntosZona(zonaActual.idZona);
+                    PolygonOptions polygonZona = new PolygonOptions();
+                    for(Punto puntoActual : puntosZona1) {
+                        // Define los vértices del polígono
+                        polygonZona.add(new LatLng(puntoActual.latitud, puntoActual.longitud));
+                    }
+                    polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
+                    runOnUiThread(() -> {
+                        googleMap.addPolygon(polygonZona);
 
-        polygon.setClickable(true);
+                        // Configura un Listener para el polígono
+                        Polygon polygon = mMap.addPolygon(polygonZona);
+                        polygon.setTag(zonaActual.idZona);
+                        polygon.setClickable(true);
+                    });
+
+                    System.out.println("Ya hay una nueva zona: ");
 
 
-        //-----------------------------------------------------------------------
-        //ZONA 2
-        p1 = new LatLng(43.5421999,-1.5401939);
-        p2 = new LatLng(46.1548007,-1.5081489);
-        p3 = new LatLng(47.7409786,-4.4735639);
-        p4 = new LatLng(44.9864197,-6.3757989);
-        PolygonOptions zonax = new PolygonOptions().add(p1, p2, p3, p4).strokeWidth(5).strokeColor(Color.argb(100, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
+                });
+                hiloPunto.start();
+            }
 
-        googleMap.addPolygon(zonax);
+        });
+        hiloZona.start();
 
-        Polygon polygonFran = mMap.addPolygon(zonax);
-        polygonFran.setTag("Zona 2");
-        polygonFran.setClickable(true);
-
-        //-----------------------------------------------------------------------
-        //ZONA 3
-        p1 = new LatLng(31.7618455,35.5069471);
-        p2 = new LatLng(31.5882584,35.4244368);
-        p3 = new LatLng(31.3405186,35.4314751);
-        p4 = new LatLng(31.4144056,35.5523041);
-        p5 = new LatLng(31.7366645,35.5717301);
-        PolygonOptions zonam = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(5).strokeColor(Color.argb(100, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
-
-        googleMap.addPolygon(zonam);
-
-        Polygon polygonMuer = mMap.addPolygon(zonam);
-        polygonMuer.setTag("Zona 3");
-        polygonMuer.setClickable(true);
-
-        //-----------------------------------------------------------------------
-        //ZONA 4
-        p1 = new LatLng(45.8976976,30.829275);
-        p2 = new LatLng(42.2413829,28.3443241);
-        p3 = new LatLng(42.2438319,34.0893151);
-        p4 = new LatLng(41.473398,39.3170011);
-        p5 = new LatLng(44.7853808,36.9592651);
-        LatLng p6 = new LatLng(44.7853808,36.9592651);
-        PolygonOptions zonan = new PolygonOptions().add(p1, p2, p3, p4,p5,p6).strokeWidth(5).strokeColor(Color.argb(100, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
-
-        googleMap.addPolygon(zonan);
-
-        Polygon polygonNegr = mMap.addPolygon(zonan);
-        polygonNegr.setTag("Zona 4");
-        polygonNegr.setClickable(true);
-
-        //-----------------------------------------------------------------------
-        //ZONA 5
-        p1 = new LatLng(27.1712907,34.0769491);
-        p2 = new LatLng(27.8664967,35.1607181);
-        p3 = new LatLng(17.7282221,41.7809541);
-        p4 = new LatLng(13.3527472,43.0056311);
-        p5 = new LatLng(15.8863821,40.2927481);
-        PolygonOptions zonar = new PolygonOptions().add(p1, p2, p3, p4,p5).strokeWidth(5).strokeColor(Color.argb(100, 255, 0,0 )).fillColor(Color.argb(50, 255, 0,0 ));
-
-        googleMap.addPolygon(zonar);
-
-        Polygon polygonRojo = mMap.addPolygon(zonar);
-        polygonRojo.setTag("Zona 5");
-        polygonRojo.setClickable(true);
 
         mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
             public void onPolygonClick(Polygon polygon) {
                 // Obtén la etiqueta o identificador del polígono clicado
-                String tag = (String) polygon.getTag();
+                int id = (int) polygon.getTag();
 
-                // Realiza acciones diferentes según la etiqueta o identificador
+
+                Thread hilo = new Thread(() -> {
+
+                    Zona zona = new ZonaRepository(SingletonConnection.getSingletonInstance()).obtener(id);
+                    runOnUiThread(() -> {
+                        // Código que afecta a la interfaz de usuario
+                        imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
+
+                        nombre.setText(zona.nombre);
+                        estado.setText(Html.fromHtml("<b>Estado: </b>") + zona.estado);
+                        descripcion.setText(zona.descripcion);
+                    });
+
+                });
+                hilo.start();
+
+
+                /*// Realiza acciones diferentes según la etiqueta o identificador
                 if ("Zona 1".equals(tag)) {
                     // Acciones para la Zona 1
                     imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
@@ -220,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             "<br>" +
                             "<b>Peligrosidad: El mar rojo tiene bastantes especies peligrosas, como tiburones, peces león, peces escorpión y muchos más"));
 
-                }
+                }*/
                     popup.setVisibility(View.VISIBLE);
 
             }
@@ -262,7 +239,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     runOnUiThread(() -> {
                         // Código que afecta a la interfaz de usuario
                         imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
-                        System.out.println("Hugo mira aqui: ");
+
                         nombre.setText(animal.nombre);
                         estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
                         descripcion.setText(animal.descripcion);

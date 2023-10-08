@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.mMap.setOnMapClickListener(this);
         this.mMap.setOnMapLongClickListener(this);
 
-
+        //-----------------------------------------------
+        //CREACION DE ZONAS
         Thread hiloZona = new Thread(() -> {
             List<Zona> zonas = new ZonaRepository(SingletonConnection.getSingletonInstance()).obtenerTodos();
 
@@ -82,7 +83,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         // Define los vértices del polígono
                         polygonZona.add(new LatLng(puntoActual.latitud, puntoActual.longitud));
                     }
-                    polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
+                    //Editar el color
+                    if(zonaActual.color.equals("BLUE")) {
+                        polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
+                    } else if(zonaActual.color.equals("GREEN")) {
+                        polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
+                    } else if(zonaActual.color.equals("RED")) {
+                        polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 255, 0,0 )).fillColor(Color.argb(50, 255, 0,0 ));
+                    }
+
                     runOnUiThread(() -> {
                         googleMap.addPolygon(polygonZona);
 
@@ -103,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         hiloZona.start();
 
 
+        //-----------------------------------------------
+        //CLICK EN ZONAS
         mMap.setOnPolygonClickListener(new GoogleMap.OnPolygonClickListener() {
             @Override
             public void onPolygonClick(Polygon polygon) {
@@ -125,83 +136,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 });
                 hilo.start();
 
-
-                /*// Realiza acciones diferentes según la etiqueta o identificador
-                if ("Zona 1".equals(tag)) {
-                    // Acciones para la Zona 1
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.elcabanyal));
-
-                    nombre.setText("Costa Valenciana");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramente contaminada"));
-                    descripcion.setText(Html.fromHtml("<b>Temperatura del agua:</b> verano 24-28 grados Celsius, invierno 12-15 grados Celsius.\n" +
-                            "<br>" +
-                            "<b>Salinidad:</b> alrededor de 38 partes por mil (ppt), es decir relativamente alta.\n" +
-                            "<br>" +
-                            "<b>Niveles de oxígeno disuelto:</b> Los valores suelen estar por encima de 5-6 miligramos por litro (mg/L). Tiene niveles saludables para la vida marina.\n" +
-                            "<br>" +
-                            "<b>Acidez del agua (pH):</b> alcalino, con valores típicos que varían de 7.8 a 8.4.\n" +
-                            "<br>" +
-                            "<b>Contaminación por plásticos:</b> La costa Valenciana, al igual que otros mares, enfrenta problemas de contaminación por plásticos, especialmente en áreas costeras y cerca de rutas de navegación."));
-
-
-                } else if ("Zona 2".equals(tag)) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.playafrancia));
-                    nombre.setText("Costa Francesa");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Moderadamente contaminada"));
-                    descripcion.setText(Html.fromHtml("<b>Temperatura:</b> Verano 20-22°C, invierno 8-10°C\n" +
-                            "<br>" +
-                            "<b>Salinidad:</b> alrededor de 30-35 partes por mil (ppt), valores moderadamente altos.\n" +
-                            "<br>" +
-                            "<b>Niveles de oxígeno disuelto:</b> Los valores suelen estar por encima de 5-6 miligramos por litro (mg/L). Tiene niveles saludables para la vida marina.\n" +
-                            "<br>" +
-                            "<b>Acidez del agua (pH):</b> alcalino, con valores típicos que varían de 7.8 a 8.4.\n" +
-                            "<br>" +
-                            "<b>Contaminación por plásticos:</b> Como en muchas partes del mundo, la contaminación por plásticos es un problema en algunas áreas costeras de Francia, especialmente cerca de rutas de navegación y áreas urbanas."));
-
-                } else if ("Zona 3".equals(tag)) {
-                    // Acciones para la Zona 3
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marmuerto));
-                    nombre.setText("Mar Muerto");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Muy Contaminada"));
-                    descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 35ºC-40ºC en verano, supera con creces a la mayoría de cuerpos de agua. En invierno puede estar entre 17ºC y 20ºC\n" +
-                            "<br>" +
-                            "<b>Salinidad:</b> alrededor de 330-350 partes por mil (ppt), valores exageradamente altos.\n" +
-                            "<br>" +
-                            "<b>Niveles de oxígeno disuelto:</b> Debido a la alta cantidad de sal y, por ello a la ausencia de vida marina típica, los niveles de oxigeno en el mar muerto son extremadamente bajos\n" +
-                            "<br>" +
-                            "<b>Acidez del agua (pH):</b> El pH del Mar Muerto es típicamente muy bajo, lo que significa que es altamente ácido. Los valores de pH en el Mar Muerto pueden caer en un rango de alrededor de 6.3 a 6.7.\n" +
-                            "<br>" +
-                            "<b>Contaminación por plásticos:</b> Con un impacto menor que en otros cuerpos de agua pero, también se han encontrado plásticos y deshechos en el Mar Muerto."));
-
-                } else if ("Zona 4".equals(tag)){
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marnegro));
-                    nombre.setText("Mar Negro\n");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Muy Contaminado\n"));
-                    descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 22ºC-26ºC en verano. En invierno puede estar entre 8ºC y 12ºC\n" +
-                            "<br>" +
-                            "<b>Salinidad:</b> alrededor de 17-18 partes por mil (ppt), valores bastante bajos comparados con otros mares y oceanos.\n" +
-                            "<br>" +
-                            "<b>Niveles de oxígeno disuelto:</b> En general tiene niveles normales de oxigeno disuelto. Saludables para la vida marina\n" +
-                            "<br>" +
-                            "<b>Contaminación: </b> Debido a la situación del mar negro, con muchas zonas costeras cercanas a fábricas, está bastante contaminado"));
-
-                }else if ("Zona 5".equals(tag)) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.marrojo));
-                    nombre.setText("Mar Rojo\n");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Ligeramente Contaminado\n"));
-                    descripcion.setText(Html.fromHtml("<b>Temperatura:</b> 26ºC-30ºC en verano. En invierno puede estar entre 21ºC y 25ºC\n" +
-                            "<br>" +
-                            "<b>Salinidad:</b> La salinidad del Mar Rojo puede oscilar entre 36 y 41 partes por mil (ppt). Son valores bastante altos\n" +
-                            "<br>" +
-                            "<b>Niveles de oxígeno disuelto:</b> En general tiene niveles normales de oxigeno disuelto. Saludables para la vida marina\n" +
-                            "<br>" +
-                            "<b>Peligrosidad: El mar rojo tiene bastantes especies peligrosas, como tiburones, peces león, peces escorpión y muchos más"));
-
-                }*/
-                    popup.setVisibility(View.VISIBLE);
+                popup.setVisibility(View.VISIBLE);
 
             }
         });
+
 
         //-----------------------------------------------
         //CREACION DE ANIMALES

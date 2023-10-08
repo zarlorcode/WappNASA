@@ -54,16 +54,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        Thread hilo = new Thread(() -> {
-
-            List<Animal> animales = new AnimalRepository(SingletonConnection.getSingletonInstance()).obtenerTodos();
-            for(Animal a : animales) {
-                System.out.println("Hugo mira: " + a.nombre);
-            }
-
-        });
-        hilo.start();
-
     }
 
     @Override
@@ -236,123 +226,48 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        Thread hilo = new Thread(() -> {
 
-        for(Animal animalActual : animales)
-        {
-            LatLng nuevoAnimal = new LatLng(animalActual.latitud, animalActual.longitud);
-            MarkerOptions markerNuevoAnimal = new MarkerOptions();
-            markerNuevoAnimal.position(nuevoAnimal);
-            markerNuevoAnimal.title(animalActual.nombre);
-            markerNuevoAnimal.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon));
-            mMap.addMarker(markerNuevoAnimal);
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(nuevoAnimal));
+            List<Animal> animales = new AnimalRepository(SingletonConnection.getSingletonInstance()).obtenerTodos();
+            for(Animal animalActual : animales) {
+                runOnUiThread(() -> {
+                    // Código que afecta a la interfaz de usuario
+                    LatLng nuevoAnimal = new LatLng(animalActual.latitud, animalActual.longitud);
+                    MarkerOptions markerNuevoAnimal = new MarkerOptions();
+                    markerNuevoAnimal.position(nuevoAnimal);
+                    markerNuevoAnimal.title(""+animalActual.idAnimal);
+                    markerNuevoAnimal.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon));
+                    mMap.addMarker(markerNuevoAnimal);
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(nuevoAnimal));
+                });
 
-        }
+                System.out.println("Ya hay un nuevo animal: " + animalActual.nombre);
+            }
 
-        /*
-        //ANIMALES EN PELIGRO
-
-        //Blue Shark Marker
-        LatLng blueshark = new LatLng(36.034271, -6.169991);
-        MarkerOptions markerBlueshark = new MarkerOptions();
-        markerBlueshark.position(blueshark);
-        markerBlueshark.title("Blue Shark");
-        markerBlueshark.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon));
-        mMap.addMarker(markerBlueshark);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(blueshark));
-
-        //Shagreen Skate
-        LatLng shangreen = new LatLng(57.2567039, 0.6946521);
-        MarkerOptions markerShangreen = new MarkerOptions();
-        markerShangreen.position(shangreen);
-        markerShangreen.title("Shagreen Skate");
-        markerShangreen.icon(BitmapDescriptorFactory.fromResource(R.drawable.peligroextincion));
-        mMap.addMarker(markerShangreen);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(shangreen));
-
-        //Basking Shark
-        LatLng basking = new LatLng(33.2943895, 17.8180001);
-        MarkerOptions markerBasking = new MarkerOptions();
-        markerBasking.position(basking);
-        markerBasking.title("Basking Shark");
-        markerBasking.icon(BitmapDescriptorFactory.fromResource(R.drawable.peligroextincion));
-        mMap.addMarker(markerBasking);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(basking));
-
-        //Angel Shark
-        LatLng angel = new LatLng(51.2485543, -6.9811829);
-        MarkerOptions markerAngel = new MarkerOptions();
-        markerAngel.position(angel);
-        markerAngel.title("Angel Shark");
-        markerAngel.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon));
-        mMap.addMarker(markerAngel);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(angel));
-
-        //Dusky Grouper
-        LatLng dusky = new LatLng(39.4356891, 0.6393341);
-        MarkerOptions markerDusky = new MarkerOptions();
-        markerDusky.position(dusky);
-        markerDusky.title("Dusky Grouper");
-        markerDusky.icon(BitmapDescriptorFactory.fromResource(R.drawable.peligroextincion));
-        mMap.addMarker(markerDusky);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(dusky));*/
+        });
+        hilo.start();
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 // Verificar qué marcador se hizo clic utilizando el título o una etiqueta personalizada
-                if (marker.getTitle().equals("Blue Shark")) {
-                    // Hacer algo para el Marcador 1
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
+                int id = Integer.parseInt(marker.getTitle());
 
-                    nombre.setText("Blue Shark");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
-                    descripcion.setText("El tiburón azul es un tiburón de color azul brillante que habita en océanos de todo el mundo."+
-                            "Es conocido por ser rápido y ágil, se alimenta de peces y calamares, y desempeña un papel importante en " +
-                            "los ecosistemas marinos. Sin embargo, enfrenta amenazas debido a la pesca excesiva y la demanda de sus"+
-                            "aletas y carne. Está clasificado como una especie vulnerable. ");
-                    // Por ejemplo, mostrar una ventana emergente específica o realizar una acción específica.
-                } else if (marker.getTitle().equals("Shagreen Skate")) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.shagreenskate));
+                Thread hilo = new Thread(() -> {
 
-                    nombre.setText("Shagreen Skate");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
-                    descripcion.setText("El Shagreen Skate es una especie de raya que se encuentra en el océano Atlántico " +
-                            "nororiental. Es conocida por su piel rugosa, llamada shagreen, y su aspecto peculiar. Está " +
-                            "adaptada a vivir en aguas profundas y se alimenta de peces y otros organismos marinos. Aunque no es" +
-                            " ampliamente conocida, su conservación es importante debido a la vulnerabilidad de muchas especies de" +
-                            " rayas en todo el mundo.");
-                    // Hacer algo para el Marcador 2
-                } else if (marker.getTitle().equals("Basking Shark")) {
-                    // Hacer algo para el Marcador 3
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.basking));
+                    Animal animal = new AnimalRepository(SingletonConnection.getSingletonInstance()).obtener(id);
+                    runOnUiThread(() -> {
+                        // Código que afecta a la interfaz de usuario
+                        imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
 
-                    nombre.setText("Basking Shark");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
-                    descripcion.setText("El Basking Shark es uno de los tiburones más grandes del mundo, llegando a medir hasta " +
-                            "12 metros de largo. Aunque parece imponente, se alimenta principalmente de plancton y es inofensivo para" +
-                            " los humanos. Se caracteriza por nadar lentamente cerca de la superficie del agua.");
-                }else if((marker.getTitle().equals("Angel Shark"))) {
+                        nombre.setText(animal.nombre);
+                        estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
+                        descripcion.setText(animal.descripcion);
+                    });
 
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.angelshark));
+                });
+                hilo.start();
 
-                    nombre.setText("Angel Shark");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
-                    descripcion.setText("El Angelshark es un tipo de tiburón aplanado que se asemeja a una raya. Vive en el fondo" +
-                            " marino y se camufla muy bien. Su cuerpo es ancho y plano, con aletas pectorales anchas que se asemejan" +
-                            " a alas de ángel, de ahí su nombre. Son depredadores sigilosos que esperan enterrados en la arena para" +
-                            " atrapar presas que pasan cerca. Aunque solían ser comunes, muchas especies de angelshark se consideran" +
-                            " en peligro debido a la pesca excesiva y la degradación del hábitat marino.");
-
-                }else if((marker.getTitle().equals("Dusky Grouper"))) {
-                    imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.duskygrouper));
-                    nombre.setText("Dusky Grouper");
-                    estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
-                    descripcion.setText("El Dusky Grouper es un pez grande de color gris oscuro que se encuentra en el Atlántico oriental y" +
-                            " el Mediterráneo. Vive en hábitats rocosos y se alimenta de otros peces y crustáceos. Es valorado en la pesca" +
-                            " comercial y a menudo se implementan medidas de conservación debido a la disminución de sus poblaciones en" +
-                            " algunas áreas.");
-                }
                 popup.setVisibility(View.VISIBLE);
                 return false; // Devuelve 'true' si consumes el evento, 'false' si no.
             }

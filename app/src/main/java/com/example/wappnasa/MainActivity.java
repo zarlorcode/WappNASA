@@ -24,12 +24,19 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.List;
+
+import Persistencia.AnimalRepository;
+import Persistencia.SingletonConnection;
+
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     EditText txtDireccion;
     GoogleMap mMap;
     ImageView botonX, imagenPrincipal;
     RelativeLayout popup;
     TextView nombre, estado, descripcion;
+
+    List<Animal> animales;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        Thread hilo = new Thread(() -> {
+
+            List<Animal> animales = new AnimalRepository(SingletonConnection.getSingletonInstance()).obtenerTodos();
+            for(Animal a : animales) {
+                System.out.println("Hugo mira: " + a.nombre);
+            }
+
+        });
+        hilo.start();
+
     }
 
     @Override
@@ -54,9 +71,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap= googleMap;
         this.mMap.setOnMapClickListener(this);
         this.mMap.setOnMapLongClickListener(this);
-
-        //MOVE CAMERA TO SPAIN
-
 
         //-----------------------------------------------------------------------
         //ZONA 1
@@ -223,6 +237,19 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
 
 
+        for(Animal animalActual : animales)
+        {
+            LatLng nuevoAnimal = new LatLng(animalActual.latitud, animalActual.longitud);
+            MarkerOptions markerNuevoAnimal = new MarkerOptions();
+            markerNuevoAnimal.position(nuevoAnimal);
+            markerNuevoAnimal.title(animalActual.nombre);
+            markerNuevoAnimal.icon(BitmapDescriptorFactory.fromResource(R.drawable.iconotiburon));
+            mMap.addMarker(markerNuevoAnimal);
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(nuevoAnimal));
+
+        }
+
+        /*
         //ANIMALES EN PELIGRO
 
         //Blue Shark Marker
@@ -268,7 +295,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         markerDusky.title("Dusky Grouper");
         markerDusky.icon(BitmapDescriptorFactory.fromResource(R.drawable.peligroextincion));
         mMap.addMarker(markerDusky);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(dusky));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(dusky));*/
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override

@@ -226,6 +226,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
+        //-----------------------------------------------
+        //CREACION DE ANIMALES
         Thread hilo = new Thread(() -> {
 
             List<Animal> animales = new AnimalRepository(SingletonConnection.getSingletonInstance()).obtenerTodos();
@@ -247,10 +249,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         });
         hilo.start();
 
+        //--------------------------------------------
+        //ANIMALES CLICKADOS
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                // Verificar qué marcador se hizo clic utilizando el título o una etiqueta personalizada
                 int id = Integer.parseInt(marker.getTitle());
 
                 Thread hilo = new Thread(() -> {
@@ -259,7 +262,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     runOnUiThread(() -> {
                         // Código que afecta a la interfaz de usuario
                         imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.blueshark));
-
+                        System.out.println("Hugo mira aqui: ");
                         nombre.setText(animal.nombre);
                         estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
                         descripcion.setText(animal.descripcion);

@@ -281,9 +281,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     nombre.setText("Blue Shark");
                     estado.setText(Html.fromHtml("<b>Estado:</b> Población decreciendo"));
                     descripcion.setText("El tiburón azul es un tiburón de color azul brillante que habita en océanos de todo el mundo."+
-                            "\"Es conocido por ser rápido y ágil, se alimenta de peces y calamares, y desempeña un papel importante en " +
-                            "\"los ecosistemas marinos. Sin embargo, enfrenta amenazas debido a la pesca excesiva y la demanda de sus"+
-                            "\"aletas y carne. Está clasificado como una especie vulnerable. ");
+                            "Es conocido por ser rápido y ágil, se alimenta de peces y calamares, y desempeña un papel importante en " +
+                            "los ecosistemas marinos. Sin embargo, enfrenta amenazas debido a la pesca excesiva y la demanda de sus"+
+                            "aletas y carne. Está clasificado como una especie vulnerable. ");
                     // Por ejemplo, mostrar una ventana emergente específica o realizar una acción específica.
                 } else if (marker.getTitle().equals("Shagreen Skate")) {
                     imagenPrincipal.setImageDrawable(getResources().getDrawable(R.drawable.shagreenskate));

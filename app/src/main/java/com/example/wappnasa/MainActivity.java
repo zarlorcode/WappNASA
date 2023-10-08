@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //MOVE CAMERA TO SPAIN
 
-
         //-----------------------------------------------------------------------
         //ZONA 1
 

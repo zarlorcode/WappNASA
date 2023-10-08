@@ -4,12 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Base64;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,7 +24,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import Persistencia.AnimalRepository;
@@ -41,8 +37,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     ImageView botonX, imagenPrincipal;
     RelativeLayout popup;
     TextView nombre, estado, descripcion;
-
-    List<Animal> animales;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,12 +78,16 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         polygonZona.add(new LatLng(puntoActual.latitud, puntoActual.longitud));
                     }
                     //Editar el color
-                    if(zonaActual.color.equals("BLUE")) {
-                        polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
-                    } else if(zonaActual.color.equals("GREEN")) {
-                        polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
-                    } else if(zonaActual.color.equals("RED")) {
-                        polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 255, 0,0 )).fillColor(Color.argb(50, 255, 0,0 ));
+                    switch(zonaActual.color)
+                    {
+                        case "GREEN":
+                            polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 0, 255,0 )).fillColor(Color.argb(50, 0, 255,0 ));
+                            break;
+                        case "BLUE":
+                            polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 0, 0,255 )).fillColor(Color.argb(50, 0, 0,255 ));
+                            break;
+                        case "RED":
+                            polygonZona.strokeWidth(5).strokeColor(Color.argb(50, 255, 0,0 )).fillColor(Color.argb(50, 255, 0,0 ));
                     }
 
                     runOnUiThread(() -> {
@@ -100,10 +98,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         polygon.setTag(zonaActual.idZona);
                         polygon.setClickable(true);
                     });
-
-                    System.out.println("Ya hay una nueva zona: ");
-
-
                 });
                 hiloPunto.start();
             }
@@ -204,14 +198,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
     @Override
-    public void onMapClick(@NonNull LatLng latLng) {
-        //txtLatitud.setText(""+latLng.latitude);
-        //txtLongitud.setText(""+latLng.longitude);
-    }
+    public void onMapClick(@NonNull LatLng latLng) {}
 
     @Override
-    public void onMapLongClick(@NonNull LatLng latLng) {
-        //txtLatitud.setText(""+latLng.latitude);
-        //txtLongitud.setText(""+latLng.longitude);
-    }
+    public void onMapLongClick(@NonNull LatLng latLng) {}
 }
